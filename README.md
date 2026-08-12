@@ -1,11 +1,15 @@
 # Student Portfolio — HTML, CSS and Vanilla JavaScript
 
+**Live demo: https://student-portfolio-kappa-weld.vercel.app**
+
 A single page portfolio built with plain HTML, CSS and JavaScript. No frameworks, no build
 step, no dependencies. Every section on the page is generated from one file: `data.js`.
 
+Free to use. Fork it, put your own details in `data.js`, and it is your portfolio.
+
 ## Running it
 
-Double click `index.html`. That is the whole setup.
+Download the files and double click `index.html`. That is the whole setup.
 
 ## Adding your own details
 
