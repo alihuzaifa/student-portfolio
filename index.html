@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#4f46e5">
+
+    <title>Student Portfolio</title>
+
+    <!-- These three are filled in from data.js so the page shares well on social media -->
+    <meta name="description" id="metaDesc" content="">
+    <meta property="og:title" id="ogTitle" content="">
+    <meta property="og:description" id="ogDesc" content="">
+    <meta property="og:type" content="website">
+
+    <link rel="icon" id="favicon" href="data:,">
+    <link rel="stylesheet" href="style.css">
+
+    <script>
+        /* This short script has to run here, before the page is painted, so the
+           visitor never sees a flash of the light theme before the dark one loads.
+           It reads the theme saved on the last visit, and falls back to whatever
+           the operating system prefers. script.js handles everything after this. */
+        var savedTheme = localStorage.getItem("portfolioTheme");
+
+        if (savedTheme === null && window.matchMedia("(prefers-color-scheme: dark)").matches === true) {
+            savedTheme = "dark";
+        }
+
+        if (savedTheme === "dark") {
+            document.documentElement.className = "dark";
+        }
+    </script>
+</head>
+
+<body>
+
+    <!-- ============ PAGE LOADER ============ -->
+    <div class="loader" id="loader">
+        <div class="loader-ring"></div>
+        <p class="loader-text" id="loaderText"></p>
+    </div>
+
+    <!-- ============ SCROLL PROGRESS BAR ============ -->
+    <div class="scroll-bar" id="scrollBar"></div>
+
+    <!-- ============ NAVIGATION BAR ============ -->
+    <header class="navbar" id="navbar">
+        <div class="container nav-inner">
+            <a href="#home" class="logo" id="navLogo"></a>
+
+            <nav aria-label="Main navigation">
+                <ul class="nav-menu" id="navMenu"></ul>
+            </nav>
+
+            <div class="nav-right">
+
+                <!-- Dark and light theme switch -->
+                <button class="theme-switch" id="themeBtn" type="button" role="switch" aria-checked="false"
+                    aria-label="Switch between dark and light theme">
+                    <span class="switch-track">
+                        <svg class="switch-icon icon-sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                            <circle cx="12" cy="12" r="4.2"></circle>
+                            <path
+                                d="M12 2v2.4M12 19.6V22M2 12h2.4M19.6 12H22M4.9 4.9l1.7 1.7M17.4 17.4l1.7 1.7M19.1 4.9l-1.7 1.7M6.6 17.4l-1.7 1.7">
+                            </path>
+                        </svg>
+                        <svg class="switch-icon icon-moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                            <path d="M20 13.5A8.2 8.2 0 1 1 10.5 4a6.6 6.6 0 0 0 9.5 9.5z"></path>
+                        </svg>
+                        <span class="switch-knob"></span>
+                    </span>
+                </button>
+
+                <!-- Mobile menu button -->
+                <button class="menu-btn" id="menuBtn" type="button" aria-label="Open the menu" aria-expanded="false"
+                    aria-controls="navMenu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- ============ HERO ============ -->
+        <section class="hero" id="home">
+            <div class="hero-glow" aria-hidden="true"></div>
+            <div class="container hero-inner">
+
+                <div class="hero-text">
+                    <span class="badge" id="heroBadge"></span>
+                    <h1 class="hero-title" id="heroName"></h1>
+                    <p class="hero-role">
+                        <span class="hero-role-static">I am a </span>
+                        <span class="typing" id="typingText"></span><span class="cursor" aria-hidden="true">|</span>
+                    </p>
+                    <p class="hero-tagline" id="heroTagline"></p>
+
+                    <div class="hero-btns">
+                        <a href="#projects" class="btn btn-primary">View My Work</a>
+                        <a href="#contact" class="btn btn-ghost">Hire Me</a>
+                        <a class="btn btn-ghost" id="resumeBtn" download>Download CV</a>
+                    </div>
+
+                    <ul class="social-row" id="socialRow" aria-label="Social profiles"></ul>
+                </div>
+
+                <div class="hero-photo">
+                    <div class="photo-ring">
+                        <div class="photo-inner" id="profilePhoto"></div>
+                    </div>
+                    <div class="float-chip chip-1" id="chipOne"></div>
+                    <div class="float-chip chip-2" id="chipTwo"></div>
+                </div>
+
+            </div>
+
+            <a href="#about" class="scroll-hint">Scroll down</a>
+        </section>
+
+        <!-- ============ ABOUT ============ -->
+        <section class="section" id="about" aria-labelledby="aboutTitle">
+            <div class="container">
+                <div class="section-head reveal">
+                    <span class="section-tag">Introduction</span>
+                    <h2 class="section-title" id="aboutTitle">About Me</h2>
+                    <p class="section-sub">A short look at who I am and what I am studying.</p>
+                </div>
+
+                <div class="about-grid">
+                    <div class="about-left reveal">
+                        <div class="about-copy" id="aboutText"></div>
+                        <ul class="fact-list" id="aboutFacts"></ul>
+                    </div>
+
+                    <div class="stats-grid reveal" id="statsGrid"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ SKILLS ============ -->
+        <section class="section section-alt" id="skills" aria-labelledby="skillsTitle">
+            <div class="container">
+                <div class="section-head reveal">
+                    <span class="section-tag">My Toolkit</span>
+                    <h2 class="section-title" id="skillsTitle">Skills</h2>
+                    <p class="section-sub">What I work with today and what I am learning next.</p>
+                </div>
+
+                <div class="skills-grid" id="skillsGrid"></div>
+            </div>
+        </section>
+
+        <!-- ============ PROJECTS ============ -->
+        <section class="section" id="projects" aria-labelledby="projectsTitle">
+            <div class="container">
+                <div class="section-head reveal">
+                    <span class="section-tag">My Work</span>
+                    <h2 class="section-title" id="projectsTitle">Projects</h2>
+                    <p class="section-sub">A few things I have built while learning.</p>
+                </div>
+
+                <div class="filter-row reveal" id="filterRow" role="group" aria-label="Filter projects by category">
+                </div>
+                <div class="projects-grid" id="projectsGrid"></div>
+            </div>
+        </section>
+
+        <!-- ============ EDUCATION AND EXPERIENCE ============ -->
+        <section class="section section-alt" id="education" aria-labelledby="educationTitle">
+            <div class="container">
+                <div class="section-head reveal">
+                    <span class="section-tag">My Journey</span>
+                    <h2 class="section-title" id="educationTitle">Education &amp; Experience</h2>
+                    <p class="section-sub">Where I have studied and where I have worked.</p>
+                </div>
+
+                <div class="timeline" id="timeline"></div>
+
+                <div class="section-head reveal cert-head">
+                    <h3 class="section-title small">Certificates</h3>
+                </div>
+                <div class="cert-grid" id="certGrid"></div>
+            </div>
+        </section>
+
+        <!-- ============ SERVICES ============ -->
+        <section class="section" id="services" aria-labelledby="servicesTitle">
+            <div class="container">
+                <div class="section-head reveal">
+                    <span class="section-tag">How I Can Help</span>
+                    <h2 class="section-title" id="servicesTitle">Services</h2>
+                    <p class="section-sub">The kind of work I take on right now.</p>
+                </div>
+
+                <div class="services-grid" id="servicesGrid"></div>
+            </div>
+        </section>
+
+        <!-- ============ TESTIMONIALS ============ -->
+        <section class="section section-alt" id="testimonials" aria-labelledby="testimonialsTitle">
+            <div class="container">
+                <div class="section-head reveal">
+                    <span class="section-tag">Kind Words</span>
+                    <h2 class="section-title" id="testimonialsTitle">Testimonials</h2>
+                    <p class="section-sub">What people I have worked with have said.</p>
+                </div>
+
+                <div class="testi-grid" id="testiGrid"></div>
+            </div>
+        </section>
+
+        <!-- ============ CONTACT ============ -->
+        <section class="section" id="contact" aria-labelledby="contactTitle">
+            <div class="container">
+                <div class="section-head reveal">
+                    <span class="section-tag">Say Hello</span>
+                    <h2 class="section-title" id="contactTitle">Contact Me</h2>
+                    <p class="section-sub">Have a project or a question? Here is how to reach me.</p>
+                </div>
+
+                <ul class="contact-cards reveal" id="contactCards"></ul>
+
+                <div class="contact-cta reveal">
+                    <p id="contactNoteText"></p>
+                    <a class="btn btn-primary" id="contactMailBtn"></a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="footer">
+
+        <!-- Call to action card that sits on top of the footer -->
+        <div class="container">
+            <div class="footer-cta">
+                <div class="footer-cta-text">
+                    <h2 id="footerCtaText"></h2>
+                    <p id="footerCtaSub"></p>
+                </div>
+                <a href="#contact" class="btn btn-light" id="footerCtaBtn"></a>
+            </div>
+        </div>
+
+        <div class="container footer-main">
+
+            <!-- Column 1: name, short description, social icons -->
+            <div class="footer-col footer-brand">
+                <a href="#home" class="logo" id="footerLogo"></a>
+                <p class="footer-about" id="footerAbout"></p>
+                <ul class="social-row" id="footerSocial" aria-label="Social profiles"></ul>
+            </div>
+
+            <!-- Column 2: page links -->
+            <div class="footer-col">
+                <h3 class="footer-heading" id="footerLinksHeading"></h3>
+                <ul class="footer-list" id="footerLinks"></ul>
+            </div>
+
+            <!-- Column 3: services -->
+            <div class="footer-col">
+                <h3 class="footer-heading" id="footerServicesHeading"></h3>
+                <ul class="footer-list" id="footerServices"></ul>
+            </div>
+
+            <!-- Column 4: contact details -->
+            <div class="footer-col">
+                <h3 class="footer-heading" id="footerContactHeading"></h3>
+                <ul class="footer-list footer-contact" id="footerContact"></ul>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <div class="container footer-bottom-inner">
+                <p id="footerCopy"></p>
+                <p id="footerBuilt"></p>
+            </div>
+        </div>
+    </footer>
+
+    <button class="top-btn" id="topBtn" type="button" aria-label="Back to top">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M12 19V5M5 12l7-7 7 7"></path>
+        </svg>
+    </button>
+
+    <!-- Both files load here, at the end of the body, so every element above
+         already exists by the time the code runs.
+
+         The order is important. data.js goes first and puts your content into
+         global variables (profile, projects, skillGroups and so on). script.js
+         goes second and reads those variables by name to build the page. Swap
+         the two lines and the page breaks, because the data would not exist yet.
+
+         They are plain scripts, not modules, so the site opens straight from
+         the file without needing a server. -->
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
